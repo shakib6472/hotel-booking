@@ -1,4 +1,4 @@
-import React, {use} from "react";
+import React, {useEffect, useState} from "react";
 import {Link, useNavigate, useLocation} from "react-router-dom";
 import {assets} from "../assets/assets"; // Assuming assets is exported from a file in the same directory
 import {useClerk, useUser, UserButton} from "@clerk/clerk-react";
@@ -22,20 +22,30 @@ const Navbar = () => {
 		{name: "About", path: "/"},
 	];
 
-	const [isScrolled, setIsScrolled] = React.useState(false);
-	const [isMenuOpen, setIsMenuOpen] = React.useState(false);
+	const [isScrolled, setIsScrolled] = useState(false);
+	const [isMenuOpen, setIsMenuOpen] = useState(false);
 	const {openSignIn} = useClerk();
 	const {user} = useUser();
 	const navigate = useNavigate();
 	const location = useLocation();
 
-	React.useEffect(() => {
-		const handleScroll = () => {
+	useEffect(() => {
+		if(location.pathname !== "/") {
+			setIsScrolled(true);
+			return
+		} else {
+			setIsScrolled(false);
+		}
+		setIsScrolled(prev => location.pathname !== "/" ? true : prev);
 			setIsScrolled(window.scrollY > 10);
-		};
+
+			const handleScroll = () => {
+				setIsScrolled(window.scrollY > 10);
+			};
+
 		window.addEventListener("scroll", handleScroll);
 		return () => window.removeEventListener("scroll", handleScroll);
-	}, []);
+	}, [location.pathname]);
 
 	return (
 		<nav
