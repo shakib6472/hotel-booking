@@ -78,7 +78,14 @@ export const cities = [
     "Dubai",
     "Singapore",
     "New York",
-    "London",
+    "London", 
+    "Paris",
+    "Tokyo",
+    "Sydney",
+    "Barcelona",
+    "Rome",
+    "Bangkok",
+    "Los Angeles",
 ];
 
 // Exclusive Offers Dummy Data
